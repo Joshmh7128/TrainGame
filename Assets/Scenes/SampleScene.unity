@@ -565,7 +565,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 16.55
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2133,11 +2133,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundPoint: {fileID: 1998213291}
+  rotationAlignmentContainer: {fileID: 1487112480}
   mainCamera: {fileID: 330585545}
   zoomScale: 15
   moveScale: 10
-  moveLerpSpeed: 5
+  moveLerpSpeed: 10
   zoomLerp: 5
+  minZoom: 5
+  maxZoom: 60
+  rotLerp: 8
+  newRot: 0
+  zoom: 0
+  currentYRot: 1
 --- !u!1 &875452443
 GameObject:
   m_ObjectHideFlags: 0
