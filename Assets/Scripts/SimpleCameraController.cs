@@ -11,7 +11,7 @@ public class SimpleCameraController : MonoBehaviour
     [SerializeField] Transform groundPoint; // the point that moves on the ground
     [SerializeField] Camera mainCamera; // our main camera
 
-    [SerializeField] float zoomScale, moveScale, moveLerpSpeed;
+    [SerializeField] float zoomScale, moveScale, moveLerpSpeed, zoomLerp;
 
     float zoom; // our current zoom
     Vector4 move; // our x, y, z, and zoom 
@@ -36,16 +36,16 @@ public class SimpleCameraController : MonoBehaviour
     void ProcessInputs()
     {
         // add to our zoom
-        zoom += -Input.mouseScrollDelta.y * zoomScale * Time.fixedDeltaTime;
+        zoom = -Input.mouseScrollDelta.y * zoomScale;
 
         // move the ground point around in the space using the WASD keys
         move = new Vector4(
-            move.x + Input.GetAxis("Horizontal") * moveScale * Time.fixedDeltaTime * groundPoint.forward.x, 
+            move.x + Input.GetAxis("Horizontal") * moveScale * Time.deltaTime, 
             0, 
-            move.z + Input.GetAxis("Vertical") * moveScale * Time.fixedDeltaTime * groundPoint.forward.z, zoom);
+            move.z + Input.GetAxis("Vertical") * moveScale * Time.deltaTime, zoom);
 
         // apply movement
-        groundPoint.position = Vector3.Lerp(groundPoint.position, move, moveLerpSpeed * Time.fixedDeltaTime);
-        mainCamera.orthographicSize = zoom;
+        groundPoint.localPosition = Vector3.Lerp(groundPoint.localPosition, move, moveLerpSpeed * Time.deltaTime);
+        mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, mainCamera.orthographicSize + zoom, zoomLerp * Time.deltaTime);
     }
 }
